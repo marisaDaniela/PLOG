@@ -39,7 +39,7 @@ board_End([
 
 % imprime as coordenadas das colunas e respetivas barras
 view(Board):-
-	nl,nl, write('    a b c d e f g h'), nl,
+	nl,nl, write('    1 2 3 4 5 6 7 8'), nl,
 	lines(1,Board),nl,!.
 
 % imprime recursivamente as linhas do tabuleiro
