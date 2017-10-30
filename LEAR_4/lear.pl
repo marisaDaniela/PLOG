@@ -6,6 +6,8 @@
 :- use_module(library(random)).
 :- dynamic state/2.
 
+% displays the game instructions
+
 instructions:-
 		write('+--------- Instructions ---------+'),
 		nl, write('|Black plays first, then turns   |'),

@@ -5,6 +5,12 @@ translate(9):- write(' ').
 translate(1):- write(' x').
 translate(2):- write(' o').
 
+% Nome de cada jogador
+player1(1).
+player2(2).
+playerC(1).
+playerC2(2).
+
 % Ler caracteres introduzidos pelo utilizador
 
 le(Linha):-
