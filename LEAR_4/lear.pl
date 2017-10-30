@@ -1,10 +1,12 @@
 :- ensure_loaded('board.pl').
 :- ensure_loaded('menus.pl').
 :- ensure_loaded('utils.pl').
+:- ensure_loaded('gameplay.pl').
 
 :- use_module(library(lists)).
 :- use_module(library(random)).
 :- dynamic state/2.
+:- dynamic state/1.
 
 % displays the game instructions
 
@@ -26,10 +28,21 @@ instructions:-
 		nl,repeat,	le(C), C >= 0, C =< 1,
 		analize_five(C).
 		
-hum_hum:- write('TODO').
+hum_hum:-
+	board(Board),
+        player1(B),
+%	player2(W),
+	printBoard(Board),
+	assert(board(Board)),
+	repeat,
+	retract(board(CurrBoard)),
+	makeMove(CurrBoard, NewBoard, B),
+	assert(board(NewBoard)),
+	printBoard(NewBoard).
 
 comp_comp:- write('TODO').
 
 hum_comp:- write('TODO').
+
 
 
