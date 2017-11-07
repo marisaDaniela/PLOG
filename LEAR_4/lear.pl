@@ -1,3 +1,5 @@
+:- dynamic state/2.
+
 :- ensure_loaded('board.pl').
 :- ensure_loaded('menus.pl').
 :- ensure_loaded('utils.pl').
@@ -5,8 +7,7 @@
 
 :- use_module(library(lists)).
 :- use_module(library(random)).
-:- dynamic state/2.
-:- dynamic state/1.
+
 
 % displays the game instructions
 
@@ -43,6 +44,3 @@ hum_hum:-
 comp_comp:- write('TODO').
 
 hum_comp:- write('TODO').
-
-
-

@@ -1,7 +1,7 @@
 /************************************************
 				BOARDS					
 ************************************************/
-
+:- dynamic board/1.
 % empty board example
 board([
 [0,0,0,0,0,0,0,0],
@@ -61,15 +61,14 @@ show_line([El|Es]):-
 
 % imprime o tabuleiro	
 printBoard(Board):- 
-	board(Board), 
 	view(Board).
 				
-% imprime o tabuleiro	
+% imprime o tabuleiro intermedio	
 printBoardInit(Board):- 
 	board_Int(Board), 
 	view(Board).
 	
-% imprime o tabuleiro	
+% imprime o tabuleiro final	
 printBoardEnd(Board):- 
 	board_End(Board), 
 	view(Board).

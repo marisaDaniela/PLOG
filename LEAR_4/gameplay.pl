@@ -9,9 +9,7 @@ getPiece(Board, NLine, NCol, Piece):-
         getElpos(NCol, Line, Piece). 
 
 
-setInCol(1, [_|Resto], Piece, [Piece|Resto]):-
-        %write('setInCol'),
-        setInCol(1, [_|Resto], Piece, [Piece|Resto]).
+setInCol(1, [_|Resto], Piece, [Piece|Resto]).
 setInCol(Pos, [X|Resto], Piece, [X|NewResto]):-
         %write('setInCol2'),
         Pos>1,
@@ -35,7 +33,7 @@ movePlace(Line, Col):-
         write('Choose a place to set a piece.'), nl,
         write('Line: '), getNum(Line),
         write('Col: '), getNum(Col), nl. 
-%fazer restrições de lugar
+%fazer restriÃ§Ãµes de lugar
 
 makeMove(CurrBoard, NewBoard, Player):-
         write('MakeMove'),
