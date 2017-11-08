@@ -30,7 +30,7 @@ leTodos(Ch,[Ch|Chars]):-
 % Para as coordenadas
 getNum(N):- get_code(C),
 			get_char(_),
-			N is C - 49.
+			N is C - 48.
 
 getNum(13,[]).
 getNum(10,[]).
@@ -39,7 +39,7 @@ getNum(10,[]).
 
 getLetter(N):- get_code(C),
 			get_char(_),
-			N is C - 97.	
+			N is C - 96.	
 
 getLetter(13,[]).
 getLetter(10,[]).

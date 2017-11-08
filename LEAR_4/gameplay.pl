@@ -11,22 +11,18 @@ getPiece(Board, NLine, NCol, Piece):-
 
 setInCol(1, [_|Resto], Piece, [Piece|Resto]).
 setInCol(Pos, [X|Resto], Piece, [X|NewResto]):-
-        %write('setInCol2'),
         Pos>1,
         Next is Pos-1,
         setInCol(Next, Resto, Piece, NewResto).
 
 setInLine(1, [Line|Resto], NCol, Piece, [NewLine|Resto]):-
-        write('setInLine'),
         setInCol(NCol, Line, Piece, NewLine).
 setInLine(Pos, [Line|Resto], NCol, Piece, [Line|NewResto]):-
-        write('setInLine2'),
         Pos>1,
         Next is Pos-1,
         setInLine(Next, Resto, NCol, Piece, NewResto).
 
 insertPiece(OldBoard, NLine, NCol, Piece, NewBoard):-
-        write('InsertPiece'),
         setInLine(NLine, OldBoard, NCol, Piece, NewBoard).
 
 movePlace(Line, Col):-
@@ -37,5 +33,5 @@ movePlace(Line, Col):-
 
 makeMove(CurrBoard, NewBoard, Player):-
         write('MakeMove'),
-        %movePlace(Line, Col),
-        insertPiece(CurrBoard, 1, 1, Player, NewBoard).
+        movePlace(Line, Col),
+        insertPiece(CurrBoard, Line, Col, Player, NewBoard).

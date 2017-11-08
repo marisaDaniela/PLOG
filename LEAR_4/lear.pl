@@ -31,15 +31,19 @@ instructions:-
 		
 hum_hum:-
 	board(Board),
-        player1(B),
-%	player2(W),
+    player1(B),
+	assert(state(Board,B)),
 	printBoard(Board),
-	assert(board(Board)),
 	repeat,
-	retract(board(CurrBoard)),
-	makeMove(CurrBoard, NewBoard, B),
-	assert(board(NewBoard)),
-	printBoard(NewBoard).
+	retract(state(CurrBoard, B1)),
+	player2(W),
+	playPvP(CurrBoard, B1, NewBoard, W),
+	assert(state(T2,P2)).
+
+playPvP(Board1,Player1,Board2,Player2):-
+	write('<Player '), write(Player1), write('>'),nl,
+	makeMove(Board1, Board2, Player1),
+	view(Board2).
 
 comp_comp:- write('TODO').
 
