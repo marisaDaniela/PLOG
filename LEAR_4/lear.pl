@@ -1,4 +1,5 @@
 :- dynamic state/2.
+:- dynamic state/1.
 
 :- ensure_loaded('board.pl').
 :- ensure_loaded('menus.pl').
@@ -31,19 +32,25 @@ instructions:-
 		
 hum_hum:-
 	board(Board),
-    player1(B),
-	assert(state(Board,B)),
+        player1(B),
+	player2(W),
+	assert(state(Board)),
 	printBoard(Board),
 	repeat,
-	retract(state(CurrBoard, B1)),
-	player2(W),
-	playPvP(CurrBoard, B1, NewBoard, W),
-	assert(state(T2,P2)).
+	retract(state(CurrBoard)),
+	playPvP(CurrBoard, B, NewBoard, W),
+	assert(state(NewBoard)).%,
+	%gameover.
 
 playPvP(Board1,Player1,Board2,Player2):-
 	write('<Player '), write(Player1), write('>'),nl,
 	makeMove(Board1, Board2, Player1),
-	view(Board2).
+	view(Board2),
+	playPvP(Board2,Player2,NewBoard,Player1).
+
+playPvP(Board1,Player1,Board2,Player2):-
+	nl, write('Invalid Move!! Try again'), nl,
+	playPvP(Board1,Player1,Board2,Player2).
 
 comp_comp:- write('TODO').
 

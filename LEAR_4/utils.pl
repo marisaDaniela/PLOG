@@ -28,9 +28,11 @@ leTodos(Ch,[Ch|Chars]):-
 	
 
 % Para as coordenadas
-getNum(N):- get_code(C),
-			get_char(_),
-			N is C - 48.
+getNum(N):-
+	get_code(C),
+	get_char(_),
+	atom(C),
+        N is C - 48.
 
 getNum(13,[]).
 getNum(10,[]).
