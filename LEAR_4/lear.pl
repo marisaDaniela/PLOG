@@ -34,19 +34,25 @@ hum_hum:-
 	board(Board),
         player1(B),
 	player2(W),
+	initCount(Cb, Cw),
+	%write(Cb),
+	%write(Cw),
 	assert(state(Board)),
 	printBoard(Board),
 	repeat,
 	retract(state(CurrBoard)),
-	playPvP(CurrBoard, B, NewBoard, W),
+	playPvP(CurrBoard, B, NewBoard, W, Cb, Cw),
 	assert(state(NewBoard)).%,
 	%gameover.
 
-playPvP(Board1,Player1,Board2,Player2):-
+playPvP(Board1,Player1,Board2,Player2, Cb, Cw):-
 	write('<Player '), write(Player1), write('>'),nl,
 	makeMove(Board1, Board2, Player1),
 	view(Board2),
-	playPvP(Board2,Player2,NewBoard,Player1).
+	counterInc(Player1, Cb, Cw, NewCw, NewCb),
+        %Player1==1 -> cbInc(Cb, NewCb);
+        %Player1==2 -> cwInc(Cw, NewCw),	      
+	playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw).
 
 playPvP(Board1,Player1,Board2,Player2):-
 	nl, write('Invalid Move!! Try again'), nl,

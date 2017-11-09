@@ -39,3 +39,18 @@ makeMove(CurrBoard, NewBoard, Player):-
         getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
         Piece==0,
         insertPiece(CurrBoard, Line, Col, Player, NewBoard).
+
+initCount(Cb, Cw):-
+        Cb=0,
+        Cw=0.
+
+counterInc(Player, Cb, Cw, NewCw, NewCb):-
+       Player==1 -> NewCb is Cb+1,  write(NewCb);
+       Player==2 -> NewCw is Cw+1, write(NewCw);
+       fail.
+/*
+cbInc(Cb, NewCb):-
+        NewCb is Cb+1,  write(NewCb).
+
+cwInc(Cw, NewCw):-
+    NewCw is Cw+1, write(NewCw).*/

@@ -31,7 +31,6 @@ leTodos(Ch,[Ch|Chars]):-
 getNum(N):-
 	get_code(C),
 	get_char(_),
-	atom(C),
         N is C - 48.
 
 getNum(13,[]).
