@@ -45,9 +45,8 @@ initCount(Cb, Cw):-
         Cw=0.
 
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
-       Player==1 -> NewCb is Cb+1,  write(NewCb);
-       Player==2 -> NewCw is Cw+1, write(NewCw);
-       fail.
+       Player==1 -> NewCb is Cb+1;%,  write(NewCb);
+       Player==2 -> NewCw is Cw+1.%, write(NewCw).
 /*
 cbInc(Cb, NewCb):-
         NewCb is Cb+1,  write(NewCb).
