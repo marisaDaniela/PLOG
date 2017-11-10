@@ -35,36 +35,56 @@ hum_hum:-
         player1(B),
 	player2(W),
 	initCount(Cb, Cw),
-	%write('Define the Komi (must be odd): '),
-	%getNum(Komi),%restrições para o komi só poder se ímpar
+	defineKomi(Komi),
 	assert(state(Board)),
 	printBoard(Board),
 	repeat,
 	retract(state(CurrBoard)),
-	playPvP(CurrBoard, B, NewBoard, W, Cb, Cw),
+	playPvP(CurrBoard, B, NewBoard, W, Cb, Cw, Last),
 	assert(state(NewBoard)).%,
-	%gameOver(Cb, Cw).
+	%gameOver(Cb, Cw, Komi, Last).
 
-playPvP(Board1,Player1,Board2,Player2, Cb, Cw):-
+playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last):-
+	%(Cb+Cw)=:=64,
 	write('<Player '), write(Player1), write('>'),nl,
+	%Last is Player1,
 	makeMove(Board1, Board2, Player1),
 	view(Board2),
 	counterInc(Player1, Cb, Cw, NewCw, NewCb),
 	write('NewCw: '), write(NewCw),nl,
 	write('NewCb: '), write(NewCb),	nl,      
-	playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw).
+	playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw, Last).
 
-playPvP(Board1,Player1,Board2,Player2, Cb, Cw):-
+playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last):-
+	%\+((Cb+Cw)=:=64),
 	nl, write('Invalid Move!! Try again'), nl,
-	playPvP(Board1,Player1,Board2,Player2, Cb, Cw).
+	playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last).
 
+defineKomi(Komi):-
+	write('Define the Komi (must be odd): '),
+        le(Komi),
+	write(Komi),
+	(Komi mod 2) =\= 0. 
+	/*((Komi mod 2) =:= 0 -> write('Invalid Komi!! Try again'), nl, defineKomi(Komi);
+	 true)*/%restrições para o komi só poder ser ímpar
 
-gameOver(Cb, Cw):-
+defineKomi(Komi):-
+        write('Invalid Komi!! Try again'), nl,
+        defineKomi(Komi).
+
+gameOver(Komi, Cb, Cw, Last):-
+	write('GAME OVER'), nl,
         write('Final Scores'), nl,
 	write('Black: '),
 	write(Cb), nl,
 	write('White: '),
-        write(Cw), nl.
+        write(Cw), nl,
+	write('Scores after Komi: '),
+	(Last==1 -> NewCw is Cw+Komi, NewCb is Cb, write('Black: '),write(NewCb), nl, write('White: '), write(NewCw), nl;
+	 Last==2 -> NewCb is Cb+Komi, NewCw is Cw, write('Black: '),write(NewCb), nl, write('White: '), write(NewCw), nl),
+	write('The winner is: '),
+	(NewCb > NewCw -> write('BLACK!!!'), nl;
+	 NewCw > NewCb -> write('WHITE!!!'), nl).
 	
 
 comp_comp:- write('TODO').

@@ -22,8 +22,15 @@ leTodos(13,[]).
 leTodos(10,[]).
 
 leTodos(Ch,[Ch|Chars]):-
-	get_code(NewCh),
-	leTodos(NewCh,Chars).
+	Ch >= 48,
+	Ch =< 57,
+	!,
+        get_code(NewCh),
+        leTodos(NewCh,Chars).
+
+leTodos(_,Chars):-%se quiser que falhe quando não é um algarismo tirar este pred
+        get_code(NewCh),
+        leTodos(NewCh,Chars).
 
 	
 

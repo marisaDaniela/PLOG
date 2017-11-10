@@ -27,13 +27,13 @@ insertPiece(OldBoard, NLine, NCol, Piece, NewBoard):-
 
 movePlace(Line, Col):-
         write('Choose a place to set a piece.'), nl,
-        write('Line: '), getNum(Line), 
-        write('Col: '), getNum(Col), nl. 
+        write('Line: '), le(Line), 
+        write('Col: '), le(Col), nl. 
 %fazer restricoes de lugar
 
 makeMove(CurrBoard, NewBoard, Player):-
         write('MakeMove'),
-        movePlace(Line, Col),
+        once(movePlace(Line, Col)),
         Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
         Col>=1, Col=<8,
         getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
