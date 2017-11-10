@@ -41,10 +41,11 @@ hum_hum:-
 	repeat,
 	retract(state(CurrBoard)),
 	playPvP(CurrBoard, B, NewBoard, W, Cb, Cw, Last, Komi),
-	assert(state(NewBoard)).%,
-	%gameOver(Cb, Cw, Komi, Last).
+	assert(state(NewBoard)).
 
 playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
+	Cenas is Cb + Cw , 
+	(Cenas == 64 -> gameOver(Komi, Cb, Cw, Last);
 	write('<Player '), write(Player1), write('>'),nl,
 	%Last is Player1,
 	makeMove(Board1, Board2, Player1),
@@ -52,13 +53,12 @@ playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
 	counterInc(Player1, Cb, Cw, NewCw, NewCb),
 	write('NewCw: '), write(NewCw),nl,
 	write('NewCb: '), write(NewCb),	nl,      
-	playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw, Last,Komi).
+	playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw, Last,Komi)).
 
 playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
-	Cenas is Cb + Cw , 
-	Cenas == 64 -> gameOver(Komi, Cb, Cw, Last);(
 	nl, write('Invalid Move!! Try again'), nl,
-	playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi)).
+	playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi).
+	
 	
 defineKomi(Komi):-
 	write('Define the Komi (must be odd): '),
