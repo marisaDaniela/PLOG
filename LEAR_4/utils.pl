@@ -12,7 +12,6 @@ playerC(1).
 playerC2(2).
 
 % Ler caracteres introduzidos pelo utilizador
-
 le(Linha):-
 	get_code(Ch),
 	leTodos(Ch,Chars),
@@ -21,24 +20,26 @@ le(Linha):-
 leTodos(13,[]).
 leTodos(10,[]).
 
+
+
 leTodos(Ch,[Ch|Chars]):-
 	Ch >= 48,
 	Ch =< 57,
 	!,
+	get_code(NewCh),
+	leTodos(NewCh,Chars).
+
+/*leTodos(_,Chars):-%se quiser que falhe quando não é um algarismo tirar este pred
         get_code(NewCh),
         leTodos(NewCh,Chars).
-
-leTodos(_,Chars):-%se quiser que falhe quando não é um algarismo tirar este pred
-        get_code(NewCh),
-        leTodos(NewCh,Chars).
-
+*/
 	
 
 % Para as coordenadas
 getNum(N):-
 	get_code(C),
 	get_char(_),
-        N is C - 48.
+    N is C - 48.
 
 getNum(13,[]).
 getNum(10,[]).

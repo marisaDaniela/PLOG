@@ -1,10 +1,10 @@
 :- dynamic state/2.
-:- dynamic state/1.
 
 :- ensure_loaded('board.pl').
 :- ensure_loaded('menus.pl').
 :- ensure_loaded('utils.pl').
 :- ensure_loaded('gameplay.pl').
+:- ensure_loaded('flips.pl').
 
 :- use_module(library(lists)).
 :- use_module(library(random)).
@@ -32,7 +32,7 @@ instructions:-
 		
 hum_hum:-
 	board(Board),
-        player1(B),
+    player1(B),
 	player2(W),
 	initCount(Cb, Cw),
 	defineKomi(Komi),
@@ -62,7 +62,7 @@ playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Last):-
 
 defineKomi(Komi):-
 	write('Define the Komi (must be odd): '),
-        le(Komi),
+    le(Komi),
 	write(Komi),
 	(Komi mod 2) =\= 0. 
 	/*((Komi mod 2) =:= 0 -> write('Invalid Komi!! Try again'), nl, defineKomi(Komi);
@@ -74,11 +74,11 @@ defineKomi(Komi):-
 
 gameOver(Komi, Cb, Cw, Last):-
 	write('GAME OVER'), nl,
-        write('Final Scores'), nl,
+    write('Final Scores'), nl,
 	write('Black: '),
 	write(Cb), nl,
 	write('White: '),
-        write(Cw), nl,
+    write(Cw), nl,
 	write('Scores after Komi: '),
 	(Last==1 -> NewCw is Cw+Komi, NewCb is Cb, write('Black: '),write(NewCb), nl, write('White: '), write(NewCw), nl;
 	 Last==2 -> NewCb is Cb+Komi, NewCw is Cw, write('Black: '),write(NewCb), nl, write('White: '), write(NewCw), nl),

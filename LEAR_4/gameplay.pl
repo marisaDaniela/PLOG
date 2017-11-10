@@ -31,14 +31,21 @@ movePlace(Line, Col):-
         write('Col: '), le(Col), nl. 
 %fazer restricoes de lugar
 
-makeMove(CurrBoard, NewBoard, Player):-
-        write('MakeMove'),
+
+makeMove(CurrBoard, NewBoard2, Player):-
+		write('MakeMove'),
         once(movePlace(Line, Col)),
         Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
         Col>=1, Col=<8,
         getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
         Piece==0,
-        insertPiece(CurrBoard, Line, Col, Player, NewBoard).
+        insertPiece(CurrBoard, Line, Col, Player, NewBoard),
+		teste(NewBoard, Line, Col, Player, NewBoard2).
+
+teste(CurrBoard, Line, Col, Player, NewBoard):-
+	\+checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
+teste(CurrBoard, Line, Col, Player, NewBoard):-
+	checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
 
 initCount(Cb, Cw):-
         Cb=0,
