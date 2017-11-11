@@ -1,4 +1,7 @@
 %x_oox
+/********************************************************
+		FLIPS PARA O CASO 1 NA HORIZONTAL  (X_OO)
+*********************************************************/
 checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	C1 is Col - 1, 
 	C1 >= 1, 
@@ -127,7 +130,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	C5 is Col + 4,
 	C6 is Col + 5,
 	C7 is Col + 6,
-	C8 is Col + 7,
+	%C8 is Col + 7,
 	getPiece(CurrBoard, Line, C1, Piece1),
 	Piece1 == Player,% para verificar se a anterior e igual a minha
 	getPiece(CurrBoard, Line, C2, Piece2), 
@@ -148,22 +151,21 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	getPiece(CurrBoard, Line, C7, Piece7), 
 	Piece7 \= Player, % para verificar se a seguinte e enemie
 	Piece7 \= 0,
-	getPiece(CurrBoard, Line, C8, Piece8),
-	(Piece8 == Player ; Piece8 == 0)->
 	insertPiece(CurrBoard, Line, C2, Player, Board2),
 	insertPiece(Board2, Line, C3, Player, Board3),
 	insertPiece(Board3, Line, C4, Player, Board4),
 	insertPiece(Board4, Line, C5, Player, Board5),
 	insertPiece(Board5, Line, C5, Player, Board6),
-	insertPiece(Board6, Line, C7, Player, NewBoard);
-	Piece8 \= Player,
-	Piece8 \= 0.
+	insertPiece(Board6, Line, C6, Player, Board7),
+	insertPiece(Board7, Line, C7, Player, NewBoard).
 	
 checkFlipR(CurrBoard, Line, Col, Player, CurrBoard).
 	
-%Econtrar o limite e fazer recursividade para tras
+/********************************************************
+		FLIPS PARA O CASO 2 NA HORIZONTAL  (_XOO)
+*********************************************************/
 
-%bahhh
+
 	
 	
 	
