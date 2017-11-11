@@ -8,27 +8,6 @@
 
 :- use_module(library(lists)).
 :- use_module(library(random)).
-
-
-% displays the game instructions
-
-instructions:-
-		write('+--------- Instructions ---------+'),
-		nl, write('|Black plays first, then turns   |'),
-		nl, write('|alternate. You must choose a    |'),
-		nl, write('|place where want to leave your  |'),
-		nl, write('|piece. First, you have to insert|'),
-		nl, write('|a number between [1-8] to choose|'),
-		nl, write('|the line, and then you choose   |'),
-		nl, write('|the column, choosing again a    |'),
-		nl, write('|number between [1-8]. The goal  |'),
-		nl, write('|of this game is to fill the     |'),
-		nl, write('|board with your mark and dont   |'),
-		nl, write('|let your opponent do the same.  |'),
-		nl, footer,
-		write('|1.Back                   0.Exit|'),
-		nl,repeat,	le(C), C >= 0, C =< 1,
-		analize_five(C).
 		
 hum_hum:-
 	board(Board),
@@ -64,9 +43,7 @@ defineKomi(Komi):-
 	write('Define the Komi (must be odd): '),
     le(Komi),
 	write(Komi),
-	(Komi mod 2) =\= 0. 
-	/*((Komi mod 2) =:= 0 -> write('Invalid Komi!! Try again'), nl, defineKomi(Komi);
-	 true)*/%restrições para o komi só poder ser ímpar
+	(Komi mod 2) =\= 0. % verificar se o Komi e impar ou par
 
 defineKomi(Komi):-
     write('Invalid Komi!! Try again'), nl,
@@ -87,6 +64,9 @@ gameOver(Komi, Cb, Cw, Last):-
 	 NewCw > NewCb -> write('WHITE!!!'), nl).
 	
 
-comp_comp:- write('TODO').
+comp_comp_easy:- write('TODO').
 
-hum_comp:- write('TODO').
+comp_comp_hard:- write('TODO').
+
+hum_comp_easy:- write('TODO').
+hum_comp_hard:- write('TODO').
