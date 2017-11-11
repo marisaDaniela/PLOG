@@ -1,6 +1,6 @@
 getElpos(1, [Elemento|_], Elemento).
 getElpos(Pos, [_|Resto], Elemento):-
-        Pos>1,
+        Pos > 1,
         Next is Pos-1,
         getElpos(Next, Resto, Elemento).
 

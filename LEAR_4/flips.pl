@@ -15,7 +15,7 @@ checkFlipR(CurrBoard, Line, Col, Player, CurrBoard).
 	
 %Econtrar o limite e fazer recursividade para tras
 
-
+%bahhh
 	
 	
 	

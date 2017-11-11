@@ -8,8 +8,6 @@ translate(2):- write(' o').
 % Nome de cada jogador
 player1(1).
 player2(2).
-playerC(1).
-playerC2(2).
 
 % Ler caracteres introduzidos pelo utilizador
 le(Linha):-
@@ -44,11 +42,7 @@ getNum(N):-
 getNum(13,[]).
 getNum(10,[]).
 
-			
-
-getLetter(N):- get_code(C),
-			get_char(_),
-			N is C - 96.	
-
-getLetter(13,[]).
-getLetter(10,[]).
+% Para criar valores aleatorios entre 1 e 8
+botRandom(R,C):-
+	random(1,8,R),
+	random(1,8,C).
