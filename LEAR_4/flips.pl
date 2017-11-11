@@ -159,6 +159,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	insertPiece(Board6, Line, C6, Player, Board7),
 	insertPiece(Board7, Line, C7, Player, NewBoard).
 	
+	
 checkFlipR(CurrBoard, Line, Col, Player, CurrBoard).
 	
 /********************************************************
