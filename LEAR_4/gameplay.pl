@@ -61,6 +61,14 @@ initCount(Cb, Cw):-
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
        Player==2 -> NewCw is Cw+1, NewCb is Cb.%, write(NewCw).
+
+finalScore(Board, Line, Col, Cb, Cw):-
+     Line =<8, Col =<8,
+     getPiece(Board, Line, Col, Piece),
+     counterInc(Piece, Cb, Cw, NewCw, NewCb),
+     (Col<8 -> NewCol is Col+1, NewLine is Line;
+     (Line \= 8, Col==8)-> NewCol is 0, NewLine is Line+1),
+     finalScore(Board, NewLine, NewCol, NewCb, NewCw).
 	
 %Predicado para saber se uma casa esta vazia
 
