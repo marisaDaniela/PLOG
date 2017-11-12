@@ -1,4 +1,4 @@
-%x_oox
+%x_oo
 /********************************************************
 		FLIPS PARA O CASO 1 NA HORIZONTAL (DIR)  (X_OO)
 *********************************************************/
@@ -24,7 +24,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	Piece4 \= Player, % para verificar se a seguinte e enemie
 	Piece4 \= 0.
 	
-%x_ooox
+%x_ooo
 checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	C1 is Col - 1, 
 	C1 >= 1, 
@@ -51,7 +51,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	Piece5 \= Player,
 	Piece5 \= 0.
 	
-%x_oooox
+%x_oooo
 checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	C1 is Col - 1, 
 	C1 >= 1, 
@@ -788,6 +788,162 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
 	insertPiece(Board5, Line, C5, Player, Board6),
 	insertPiece(Board6, Line, C6, Player, Board7),
 	insertPiece(Board7, Line, C7, Player, NewBoard).
+	
+/***************************************************************************************
+					CASO 3 - _ooox (VERTICAL)
+****************************************************************************************/
+
+%_oox
+checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
+	C1 is Line + 1, 
+	C2 is Line + 2, 
+	C3 is Line + 3,
+	C4 is Line + 4,
+	getPiece(CurrBoard, C1, Col, Piece1),
+	Piece1 \= Player,% para verificar se a seguinte e igual a minha
+	Piece1 \= 0,
+	getPiece(CurrBoard, C2, Col, Piece2), 
+	Piece2 \= Player, % para verificar se a next e enemie
+	Piece2 \= 0,
+	getPiece(CurrBoard, C3, Col, Piece3), 
+	Piece3 == Player, % para verificar se a seguinte e enemie
+	getPiece(CurrBoard, C4, Col, Piece4),
+	(Piece4 == Player  ; 
+	Piece4 == 0) ->
+	insertPiece(CurrBoard, C1, Col, Player, Board2),
+	insertPiece(Board2, C2, Col, Player, NewBoard);
+	Piece4 \= Player, % para verificar se a seguinte e enemie
+	Piece4 \= 0.
+
+%_ooox
+checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
+	C1 is Line + 1, 
+	C2 is Line + 2, 
+	C3 is Line + 3,
+	C4 is Line + 4,
+	C5 is Line + 5,
+	getPiece(CurrBoard, C1, Col, Piece1),
+	Piece1 \= Player,% para verificar se a anterior e igual a minha
+	Piece1 \= 0,
+	getPiece(CurrBoard, C2, Col, Piece2), 
+	Piece2 \= Player, % para verificar se a seguinte e enemie
+	Piece2 \= 0,
+	getPiece(CurrBoard, C3, Col, Piece3), 
+	Piece3 \= Player, % para verificar se a seguinte e enemie
+	Piece3 \= 0,
+	getPiece(CurrBoard, C4, Col, Piece4), 
+	Piece4 == Player, % para verificar se a seguinte e enemie
+	getPiece(CurrBoard, C5, Col, Piece5),
+	(Piece5 == Player ; Piece5 == 0)->
+	insertPiece(CurrBoard, C1, Col, Player, Board2),
+	insertPiece(Board2, C2, Col, Player, Board3),
+	insertPiece(Board3, C3, Col, Player, NewBoard);
+	Piece5 \= Player,
+	Piece5 \= 0.
+
+%_oooox
+checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
+	C1 is Line + 1, 
+	C2 is Line + 2, 
+	C3 is Line + 3,
+	C4 is Line + 4,
+	C5 is Line + 5,
+	C6 is Line + 6,
+	getPiece(CurrBoard, C1, Col, Piece1),
+	Piece1 \= Player,% para verificar se a anterior e igual a minha
+	Piece1 \= 0,
+	getPiece(CurrBoard, C2, Col, Piece2), 
+	Piece2 \= Player, % para verificar se a seguinte e enemie
+	Piece2 \= 0,
+	getPiece(CurrBoard, C3, Col, Piece3), 
+	Piece3 \= Player, % para verificar se a seguinte e enemie
+	Piece3 \= 0,
+	getPiece(CurrBoard, C4, Col, Piece4), 
+	Piece4 \= Player, % para verificar se a seguinte e enemie
+	Piece4 \= 0,
+	getPiece(CurrBoard, C5, Col, Piece5), 
+	Piece5 == Player, % para verificar se a seguinte e enemie
+	getPiece(CurrBoard, C6, Col, Piece6),
+	(Piece6 == Player ; Piece6 == 0)->
+	insertPiece(CurrBoard, C1, Col, Player, Board2),
+	insertPiece(Board2, C2, Col, Player, Board3),
+	insertPiece(Board3, C3, Col, Player, Board4),
+	insertPiece(Board4, C4, Col, Player, NewBoard);
+	Piece6 \= Player,
+	Piece6 \= 0.
+	
+%x_ooooo
+checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
+	C1 is Line + 1, 
+	C2 is Line + 2, 
+	C3 is Line + 3,
+	C4 is Line + 4,
+	C5 is Line + 5,
+	C6 is Line + 6,
+	C7 is Line + 7,
+	getPiece(CurrBoard, C1, Col, Piece1),
+	Piece1 \= Player,% para verificar se a anterior e igual a minha
+	Piece1 \= 0,
+	getPiece(CurrBoard, C2, Col, Piece2), 
+	Piece2 \= Player, % para verificar se a seguinte e enemie
+	Piece2 \= 0,
+	getPiece(CurrBoard, C3, Col, Piece3), 
+	Piece3 \= Player, % para verificar se a seguinte e enemie
+	Piece3 \= 0,
+	getPiece(CurrBoard, C4, Col, Piece4), 
+	Piece4 \= Player, % para verificar se a seguinte e enemie
+	Piece4 \= 0,
+	getPiece(CurrBoard, C5, Col, Piece5), 
+	Piece5 \= Player, % para verificar se a seguinte e enemie
+	Piece5 \= 0,
+	getPiece(CurrBoard, C6, Col, Piece6), 
+	Piece6 == Player, % para verificar se a seguinte e enemie
+	getPiece(CurrBoard, C7, Col, Piece7),
+	(Piece7 == Player ; Piece7 == 0)->
+	insertPiece(CurrBoard, C1, Col, Player, Board2),
+	insertPiece(Board2, C2, Col, Player, Board3),
+	insertPiece(Board3, C3, Col, Player, Board4),
+	insertPiece(Board4, C4, Col, Player, Board5),
+	insertPiece(Board5, C5, Col, Player, NewBoard);
+	Piece7 \= Player,
+	Piece7 \= 0.
+	
+%x_oooooo
+checkFlipR(CurrBoard, Line, Col, Player, NewBoard):-
+	C1 is Line + 1, 
+	C2 is Line + 2, 
+	C3 is Line + 3,
+	C4 is Line + 4,
+	C5 is Line + 5,
+	C6 is Line + 6,
+	C7 is Line + 7,
+	getPiece(CurrBoard, C1, Col, Piece1),
+	Piece1 \= Player,% para verificar se a anterior e igual a minha
+	Piece1 \= 0,
+	getPiece(CurrBoard, C2, Col, Piece2), 
+	Piece2 \= Player, % para verificar se a seguinte e enemie
+	Piece2 \= 0,
+	getPiece(CurrBoard, C3, Col, Piece3), 
+	Piece3 \= Player, % para verificar se a seguinte e enemie
+	Piece3 \= 0,
+	getPiece(CurrBoard, C4, Col, Piece4), 
+	Piece4 \= Player, % para verificar se a seguinte e enemie
+	Piece4 \= 0,
+	getPiece(CurrBoard, C5, Col, Piece5), 
+	Piece5 \= Player, % para verificar se a seguinte e enemie
+	Piece5 \= 0,
+	getPiece(CurrBoard, C6, Col, Piece6), 
+	Piece6 \= Player, % para verificar se a seguinte e enemie
+	Piece6 \= 0,
+	getPiece(CurrBoard, C7, Col, Piece7), 
+	Piece7 == Player, % para verificar se a seguinte e enemie
+	insertPiece(CurrBoard, C1, Col, Player, Board2),
+	insertPiece(Board2, C2, Col, Player, Board3),
+	insertPiece(Board3, C3, Col, Player, Board4),
+	insertPiece(Board4, C4, Col, Player, Board5),
+	insertPiece(Board5, C5, Col, Player, Board6),
+	insertPiece(Board6, C6, Col, Player, Board7),
+	insertPiece(Board7, C7, Col, Player, NewBoard).
 	
 checkFlipR(CurrBoard, Line, Col, Player, CurrBoard).
 	

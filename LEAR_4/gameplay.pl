@@ -32,10 +32,10 @@ movePlace(Line, Col):-
 %fazer restricoes de lugar
 
 makeMoveRandomBot(CurrBoard, NewBoard, Player, Line, Col):-
-		getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
+		getPiece(CurrBoard, Line, Col, Piece), 
         Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
         Col>=1, Col=<8,
-		Piece==0,
+		Piece==0,%verifica se ja existe uma peça no local escolhido
         insertPiece(CurrBoard, Line, Col, Player, NewBoard),
 		flip(NewBoard, Line, Col, Player, NewBoard2).
 		
@@ -55,10 +55,42 @@ flip(CurrBoard, Line, Col, Player, NewBoard):-
 	checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
 
 initCount(Cb, Cw):-
-        Cb=31,
-        Cw=31.
+        Cb=0,
+        Cw=0.
 
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
        Player==2 -> NewCw is Cw+1, NewCb is Cb.%, write(NewCw).
+	
+%Predicado para saber se uma casa esta vazia
 
+isEmptyCell(Line, Col, Board):-
+	getPiece(Board, Line, Col, Piece),
+	isEmpty(Piece).
+	
+findEmptyCell([],_,_,[]).
+findEmptyCell(Board, Line, Col, CoordinatesList):-
+	Line =< 8,
+	findall(Board, insertPiece(Board, Line, Col, 0, NewBoard), ListOfMoves),
+	%once(CoordinatesList = [[Line, Col]]),
+	%NewCoordinatesList = append(CoordinatesList, [[Line, Col]]),
+	(Col < 8 -> NewCol is Col+1, NewLine is Line;
+	Col == 8 -> NewLine is Line+1, NewCol is 0,
+	findEmptyCell(Board, NewLine, NewCol, CoordinatesList)).
+	
+validMoves([Head|Tail], ListOfMoves):-
+	initCount(Line, Col),
+	findEmptyCell(Board, Line, Col, CoordinatesList).
+	
+	
+	
+/*
+validMoves(Board, ListOfMoves):- 
+	findall(Board, insertPiece(Board, Line, Col, 0, NewBoard), ListOfMoves).
+	
+	
+	
+	*/
+	
+	
+	
