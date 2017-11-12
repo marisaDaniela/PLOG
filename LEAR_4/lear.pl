@@ -1,5 +1,6 @@
 :- dynamic state/2.
 
+
 :- ensure_loaded('board.pl').
 :- ensure_loaded('menus.pl').
 :- ensure_loaded('utils.pl').
@@ -8,6 +9,7 @@
 
 :- use_module(library(lists)).
 :- use_module(library(random)).
+:- use_module(library(system)).
 		
 hum_hum:-
 	board(Board),
@@ -90,29 +92,69 @@ playEasyPvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
 	%write('NewCw: '), write(NewCw),nl,
 	%write('NewCb: '), write(NewCb),	nl,      
 	playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif).
-	
-makeMove2(CurrBoard, NewBoard, Player, Lin, Col):-
-		getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
-        Piece==0,
-        insertPiece(CurrBoard, Line, Col, Player, NewBoard).
-		%teste(NewBoard, Line, Col, Player, NewBoard2).
 		
 playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif):-
 	nl,write('<Computer is playing>'),nl,
+	sleep(1),
 	botRandom(Line,Col),
-	makeMove2(Board2, NewBoard, Player2, Line, Col),
+	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col),
 	view(NewBoard),
-	%counterInc(Player2, Cb, Cw, NewCw, NewCb),
-	%write('NewCw: '), write(NewCw2),nl,
-	%write('NewCb: '), write(NewCb2),nl,  
 	playEasyPvC(NewBoard,Player1,NewBoard3,Player2, NewCb2, NewCw2, Last,Komi).
 	
 
 playEasyPvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
 	nl, write('Invalid Move!! Try again'), nl,
 	playEasyPvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi).
+	
+playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif):-
+	nl, write('Invalid Move!! Try again'), nl,
+	playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif).
 
-comp_comp_easy:- write('TODO').
+/******************************************************************************
+							COMP VS COMP
+*******************************************************************************/	
+comp_comp_easy:- 
+	board(Board),
+    player1(B),
+	player2(W),
+	initCount(Cb, Cw),
+	defineKomi(Komi),
+	assert(state(Board)),
+	printBoard(Board),
+	repeat,
+	retract(state(CurrBoard)),
+	playEasyCvC(CurrBoard, B, NewBoard, W, Cb, Cw, Last, Komi),
+	assert(state(NewBoard)).
+	
+playEasyCvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
+	%Cenas is Cb + Cw , 
+	%(Cenas == 64 -> gameOver(Komi, Cb, Cw, Last);
+	write('<Computer '), write(Player1), write('>'),nl,
+	sleep(0.1),
+	botRandom(Line,Col),
+	makeMoveRandomBot(Board1, Board2, Player1, Line, Col),
+	view(Board2),
+	%counterInc(Player1, Cb, Cw, NewCw, NewCb),
+	%write('NewCw: '), write(NewCw),nl,
+	%write('NewCb: '), write(NewCb),	nl,      
+	playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif).
+		
+playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif):-
+	nl,write('<Computer '), write(Player2), write('>'),nl,
+	sleep(0.1),
+	botRandom(Line,Col),
+	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col),
+	view(NewBoard),
+	playEasyCvC(NewBoard,Player1,NewBoard3,Player2, NewCb2, NewCw2, Last,Komi).
+	
+
+playEasyCvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi):-
+	nl, write('Invalid Move!! Try again'), nl,
+	playEasyCvC(Board1,Player1,Board2,Player2, Cb, Cw, Last,Komi).
+	
+playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif):-
+	nl, write('Invalid Move!! Try again'), nl,
+	playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Last,Komi,Dif).
 
 
 comp_comp_hard:- write('TODO').

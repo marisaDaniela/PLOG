@@ -44,5 +44,5 @@ getNum(10,[]).
 
 % Para criar valores aleatorios entre 1 e 8
 botRandom(R,C):-
-	random(1,8,R),
-	random(1,8,C).
+	random(1,9,R),
+	random(1,9,C).

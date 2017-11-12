@@ -31,7 +31,14 @@ movePlace(Line, Col):-
         write('Col: '), le(Col), nl. 
 %fazer restricoes de lugar
 
-
+makeMoveRandomBot(CurrBoard, NewBoard, Player, Line, Col):-
+		getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
+        Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
+        Col>=1, Col=<8,
+		Piece==0,
+        insertPiece(CurrBoard, Line, Col, Player, NewBoard),
+		flip(NewBoard, Line, Col, Player, NewBoard2).
+		
 makeMove(CurrBoard, NewBoard2, Player):-
 		write('MakeMove'),
         once(movePlace(Line, Col)),
@@ -48,8 +55,8 @@ flip(CurrBoard, Line, Col, Player, NewBoard):-
 	checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
 
 initCount(Cb, Cw):-
-        Cb=0,
-        Cw=0.
+        Cb=31,
+        Cw=31.
 
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
