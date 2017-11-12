@@ -61,9 +61,4 @@ initCount(Cb, Cw):-
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
        Player==2 -> NewCw is Cw+1, NewCb is Cb.%, write(NewCw).
-/*
-cbInc(Cb, NewCb):-
-        NewCb is Cb+1,  write(NewCb).
 
-cwInc(Cw, NewCw):-
-    NewCw is Cw+1, write(NewCw).*/
