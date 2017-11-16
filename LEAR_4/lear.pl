@@ -127,13 +127,13 @@ comp_comp_easy:-
 	printBoard(Board),
 	repeat,
 	retract(state(CurrBoard)),
+	write('<Computer vs Computer> '),nl,
 	playEasyCvC(CurrBoard, B, NewBoard, W, Cb, Cw, Komi),
 	assert(state(NewBoard)).
 
 playEasyCvC(Board,Player1,Board2,Player2, Cb, Cw, Komi):-
 	Cenas is Cb + Cw , 
 	(Cenas == 64 -> gameOver(Komi, Cb, Cw);
-	write('<Computer '), write(Player1), write('>'),nl,
 	sleep(0.1),
 	botRandom(Line,Col),
 	makeMoveRandomBot(Board, Board2, Player1, Line, Col),
@@ -141,13 +141,11 @@ playEasyCvC(Board,Player1,Board2,Player2, Cb, Cw, Komi):-
 	counterInc(Player1, Cb, Cw, NewCw, NewCb),
 	write('White: '), write(NewCw),nl,
 	write('Black: '), write(NewCb),	nl, 
-	%nl,write('<Computer is playing>'),nl,
 	playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif)).
 
 playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif):-
 	Cenas2 is NewCb + NewCw , 
 	(Cenas2 == 64 -> gameOver(Komi, Cb, Cw);
-	write('<Computer '), write(Player2), write('>'),nl,
 	sleep(0.1),
 	botRandom(Line,Col),
 	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col),
