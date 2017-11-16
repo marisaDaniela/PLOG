@@ -15,8 +15,8 @@ isEmpty(0).
 % Ler caracteres introduzidos pelo utilizador
 le(Linha):-
 	get_code(Ch),
-	leTodos(Ch,Chars),
-	name(Linha,Chars).
+	leTodos(Ch,[H|T]),
+	name(Linha,[H|T]), !.
 
 leTodos(13,[]).
 leTodos(10,[]).
