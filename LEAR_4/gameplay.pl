@@ -31,15 +31,15 @@ movePlace(Line, Col):-
         write('Col: '), le(Col), nl. 
 %fazer restricoes de lugar
 
-makeMoveRandomBot(CurrBoard, NewBoard, Player, Line, Col):-
+makeMoveRandomBot(CurrBoard, NewBoard, Player, Line, Col, Cb, Cw, NewCw, NewCb):-
 		getPiece(CurrBoard, Line, Col, Piece), 
         Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
         Col>=1, Col=<8,
 		Piece==0,%verifica se ja existe uma peça no local escolhido
         insertPiece(CurrBoard, Line, Col, Player, NewBoard),
-		flip(NewBoard, Line, Col, Player, NewBoard2).
+		flip(NewBoard, Line, Col, Player, NewBoard2, Cb, Cw, NewCw, NewCb).
 		
-makeMove(CurrBoard, NewBoard2, Player):-
+makeMove(CurrBoard, NewBoard2, Player, Cb, Cw, NewCw, NewCb):-
 		write('MakeMove'),
         once(movePlace(Line, Col)),
         Line>=1, Line=<8,%verifica se o local escolhido esta dentro do tabuleiro
@@ -47,20 +47,27 @@ makeMove(CurrBoard, NewBoard2, Player):-
         getPiece(CurrBoard, Line, Col, Piece), %verifica se ja existe uma peça no local escolhido
         Piece==0,
         insertPiece(CurrBoard, Line, Col, Player, NewBoard),
-		flip(NewBoard, Line, Col, Player, NewBoard2).
+	flip(NewBoard, Line, Col, Player, NewBoard2, Cb, Cw, NewCw, NewCb).
 
-flip(CurrBoard, Line, Col, Player, NewBoard):-
-	\+checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
-flip(CurrBoard, Line, Col, Player, NewBoard):-
-	checkFlipR(CurrBoard, Line, Col, Player, NewBoard).
+/*flip(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
+	\+checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb).*/
+flip(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
+        write('Entered flip.'),
+	checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb).
 
 initCount(Cb, Cw):-
         Cb=0,
         Cw=0.
 
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
+       write('Counter Inc.'), nl,
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
        Player==2 -> NewCw is Cw+1, NewCb is Cb.%, write(NewCw).
+
+counterDec(Player, Cb, Cw, NewCw, NewCb):-
+       write('Counter Dec.'), nl,
+       Player==1 -> NewCw is Cw-1, NewCb is Cb;%,  write(NewCb);
+       Player==2 -> NewCb is Cb-1, NewCw is Cw.%, write(NewCw).
 
 finalScore(Board, Line, Col, Cb, Cw):-
      Line =<8, Col =<8,

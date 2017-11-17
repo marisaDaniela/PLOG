@@ -27,12 +27,12 @@ playPvP(Board1,Player1,Board2,Player2, Cb, Cw, Komi):-
 	Cenas is Cb + Cw , 
 	(Cenas == 64 -> gameOver(Komi, Cb, Cw);
 	 write('<Player '), write(Player1), write('>'),nl,
-	 makeMove(Board1, Board2, Player1),
+	 makeMove(Board1, Board2, Player1, Cb, Cw, NewCw, NewCb),
 	 view(Board2),
-	 counterInc(Player1, Cb, Cw, NewCw, NewCb),
-	 write('White: '), write(NewCw),nl,
-	 write('Black: '), write(NewCb),	nl,      
-	 playPvP(Board2,Player2,NewBoard,Player1, NewCb, NewCw, Komi)).
+	 counterInc(Player1, NewCb, NewCw, NewCw2, NewCb2),
+	 write('White: '), write(NewCw2),nl,
+	 write('Black: '), write(NewCb2),	nl,      
+	 playPvP(Board2,Player2,NewBoard,Player1, NewCb2, NewCw2, Komi)).
 
 playPvP(Board1,Player1,Board2,Player2, Cb, Cw,Komi):-
 	nl, write('Invalid Move!! Try again'), nl,
@@ -87,19 +87,19 @@ playEasyPvC(Board1,Player1,Board2,Player2, Cb, Cw, Komi):-
 	Cenas is Cb + Cw , 
 	(Cenas == 64 -> gameOver(Komi, Cb, Cw);
 	write('<Player '), write(Player1), write('>'),nl,
-	makeMove(Board1, Board2, Player1),
+	makeMove(Board1, Board2, Player1, Cb, Cw, NewCw, NewCb),
 	view(Board2),
-	counterInc(Player1, Cb, Cw, NewCw, NewCb),
-	write('White: '), write(NewCw),nl,
-	write('Black: '), write(NewCb),	nl, 
+	counterInc(Player1, NewCb, NewCw, NewCw2, NewCb2),
+	write('White: '), write(NewCw2),nl,
+	write('Black: '), write(NewCb2),	nl, 
 	nl,write('<Computer is playing>'),nl,
-	playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif)).
+	playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb2, NewCw2, Komi,Dif)).
 
-playEasyPvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif):-
-	Cenas2 is NewCb + NewCw , 
+playEasyPvC(Board2,Player1,NewBoard,Player2, Cb, Cw, Komi,Dif):-
+	Cenas2 is Cb + Cw , 
 	(Cenas2 == 64 -> gameOver(Komi, Cb, Cw);
 	botRandom(Line,Col),
-	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col),
+	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col, Cb, Cw, NewCw, NewCb),
 	view(NewBoard),
 	 counterInc(Player2, NewCb, NewCw, NewCw2, NewCb2),
 	 write('White: '), write(NewCw2),nl,
@@ -136,24 +136,24 @@ playEasyCvC(Board,Player1,Board2,Player2, Cb, Cw, Komi):-
 	(Cenas == 64 -> gameOver(Komi, Cb, Cw);
 	sleep(0.1),
 	botRandom(Line,Col),
-	makeMoveRandomBot(Board, Board2, Player1, Line, Col),
+	makeMoveRandomBot(Board, Board2, Player1, Line, Col, Cb, Cw, NewCw, NewCb),
 	view(Board2),
-	counterInc(Player1, Cb, Cw, NewCw, NewCb),
-	write('White: '), write(NewCw),nl,
-	write('Black: '), write(NewCb),	nl, 
-	playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif)).
+	counterInc(Player1, NewCb, NewCw, NewCw2, NewCb2),
+	write('White: '), write(NewCw2),nl,
+	write('Black: '), write(NewCb2),	nl, 
+	playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb2, NewCw2, Komi,Dif)).
 
-playEasyCvC(Board2,Player1,NewBoard,Player2, NewCb, NewCw, Komi,Dif):-
-	Cenas2 is NewCb + NewCw , 
+playEasyCvC(Board2,Player1,NewBoard,Player2, Cb, Cw, Komi, Dif):-
+	Cenas2 is Cb + Cw , 
 	(Cenas2 == 64 -> gameOver(Komi, Cb, Cw);
 	sleep(0.1),
 	botRandom(Line,Col),
-	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col),
+	makeMoveRandomBot(Board2, NewBoard, Player2, Line, Col, Cb, Cw, NewCw, NewCb),
 	view(NewBoard),
 	 counterInc(Player2, NewCb, NewCw, NewCw2, NewCb2),
 	 write('White: '), write(NewCw2),nl,
 	write('Black: '), write(NewCb2),	nl, 
-	playEasyCvC(NewBoard,Player1,NewBoard3,Player2, NewCb2, NewCw2,Komi)).
+	playEasyCvC(NewBoard, Player1, NewBoard3, Player2, NewCb2, NewCw2, Komi)).
 
 
 playEasyCvC(Board1,Player1,Board2,Player2, Cb, Cw, Komi):-
