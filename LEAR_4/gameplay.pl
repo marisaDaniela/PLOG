@@ -52,7 +52,6 @@ makeMove(CurrBoard, NewBoard2, Player, Cb, Cw, NewCw, NewCb):-
 /*flip(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
 	\+checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb).*/
 flip(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
-        write('Entered flip.'),
 	checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb).
 
 initCount(Cb, Cw):-
@@ -60,22 +59,20 @@ initCount(Cb, Cw):-
         Cw=0.
 
 counterInc(Player, Cb, Cw, NewCw, NewCb):-
-       write('Counter Inc.'), nl,
        Player==1 -> NewCb is Cb+1, NewCw is Cw;%,  write(NewCb);
        Player==2 -> NewCw is Cw+1, NewCb is Cb.%, write(NewCw).
 
 counterDec(Player, Cb, Cw, NewCw, NewCb):-
-       write('Counter Dec.'), nl,
        Player==1 -> NewCw is Cw-1, NewCb is Cb;%,  write(NewCb);
        Player==2 -> NewCb is Cb-1, NewCw is Cw.%, write(NewCw).
 
-finalScore(Board, Line, Col, Cb, Cw):-
+/*finalScore(Board, Line, Col, Cb, Cw):-
      Line =<8, Col =<8,
      getPiece(Board, Line, Col, Piece),
      counterInc(Piece, Cb, Cw, NewCw, NewCb),
      (Col<8 -> NewCol is Col+1, NewLine is Line;
      (Line \= 8, Col==8)-> NewCol is 0, NewLine is Line+1),
-     finalScore(Board, NewLine, NewCol, NewCb, NewCw).
+     finalScore(Board, NewLine, NewCol, NewCb, NewCw).*/
 	
 %Predicado para saber se uma casa esta vazia
 

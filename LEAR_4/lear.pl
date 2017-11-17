@@ -51,9 +51,6 @@ defineKomi(Komi):-
 
 gameOver(Komi, Cb, Cw, Board):-
 	write('GAME OVER'), nl,
-	initCount(Cb, Cw),
-        initCount(Line, Col),
-	finalScore(Board, Line, Col, Cb, Cw),
     	write('Final Scores'), nl,
 	write('Black: '),
 	write(Cb), nl,
