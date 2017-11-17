@@ -792,11 +792,8 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterDec(Player, Cb9, Cw9, Cw10, Cb10),
         insertPiece(Board6, C7, Col, Player, Board7),
         counterInc(Player, Cb10, Cw10, Cw11, Cb11),
-        counterDec(Player, Cb11, Cw11, Cw12, Cb12),
-        insertPiece(Board7, C8, Col, Player, NewBoard),
-        counterInc(Player, Cb12, Cw12, Cw13, Cb13),
-        counterDec(Player, Cb13, Cw13, NewCw, NewCb).
-
+        counterDec(Player, Cb11, Cw11, NewCw, NewCb),
+        insertPiece(Board7, C8, Col, Player, NewBoard).
 %x_oooooo
 /********************************************************
                 FLIPS PARA O CASO 1 NA VERTICAL  (UP)
@@ -848,10 +845,9 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterDec(Player, Cb9, Cw9, Cw10, Cb10),
         insertPiece(Board6, C7, Col, Player, Board7),
         counterInc(Player, Cb10, Cw10, Cw11, Cb11),
-        counterDec(Player, Cb11, Cw11, Cw12, Cb12),
-        insertPiece(Board7, C8, Col, Player, NewBoard),
-        counterInc(Player, Cb12, Cw12, Cw13, Cb13),
-        counterDec(Player, Cb13, Cw13, NewCw, NewCb).
+        counterDec(Player, Cb11, Cw11, NewCw, NewCb),
+        insertPiece(Board7, C8, Col, Player, NewBoard).
+
         
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1214,7 +1210,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterInc(Player, Cb8, Cw8, Cw9, Cb9),
         counterDec(Player, Cb9, Cw9, Cw10, Cb10),
         insertPiece(Board6, Line, C7, Player, NewBoard),
-        counterInc(Player, Cb10, Cw10, Cb11, Cb11),
+        counterInc(Player, Cb10, Cw10, Cw11, Cb11),
         counterDec(Player, Cb11, Cw11, NewCw, NewCb).
 
 %x_oooooo
@@ -1252,13 +1248,13 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         Piece7 \= 0,
         insertPiece(CurrBoard, Line, C2, Player, Board2),
         counterInc(Player, Cb, Cw, Cw1, Cb1),
-        counterDec(Player, Cb2, Cw2, Cw3, Cb3),
+        counterDec(Player, Cb1, Cw1, Cw2, Cb2),
         insertPiece(Board2, Line, C3, Player, Board3),
-        counterInc(Player, Cb3, Cw3, Cw4, Cb4),
-        counterDec(Player, Cb4, Cw4, Cw5, Cb5),
+        counterInc(Player, Cb2, Cw2, Cw3, Cb3),
+        counterDec(Player, Cb3, Cw3, Cw4, Cb4),
         insertPiece(Board3, Line, C4, Player, Board4),
-        counterInc(Player, Cb5, Cw5, Cw6, Cb6),
-        counterDec(Player, Cb6, Cw6, Cw7, Cb7),
+        counterInc(Player, Cb4, Cw4, Cw5, Cb5),
+        counterDec(Player, Cb5, Cw5, Cw7, Cb7),
         insertPiece(Board4, Line, C5, Player, Board5),
         counterInc(Player, Cb7, Cw7, Cw8, Cb8),
         counterDec(Player, Cb8, Cw8, Cw9, Cb9),
@@ -1628,10 +1624,8 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterDec(Player, Cb9, Cw9, Cw10, Cb10),
         insertPiece(Board6, C7, Col, Player, Board7),
         counterInc(Player, Cb10, Cw10, Cw11, Cb11),
-        counterDec(Player, Cb11, Cw11, Cw12, Cb12),
-        insertPiece(Board7, C8, Col, Player, NewBoard),
-        counterInc(Player, Cb12, Cw12, Cw13, Cb13),
-        counterDec(Player, Cb13, Cw13, NewCw, NewCb).
+        counterDec(Player, Cb11, Cw11, NewCw, NewCb),
+        insertPiece(Board7, C8, Col, Player, NewBoard).
         
 %x_oooooo
 /********************************************************
@@ -1682,10 +1676,8 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterDec(Player, Cb9, Cw9, Cw10, Cb10),
         insertPiece(Board6, C7, Col, Player, Board7),
         counterInc(Player, Cb10, Cw10, Cw11, Cb11),
-        counterDec(Player, Cb11, Cw11, Cw12, Cb12),
-        insertPiece(Board7, C, Col, Player, NewBoard),
-        counterInc(Player, Cb12, Cw12, Cw13, Cb13),
-        counterDec(Player, Cb13, Cw13, NewCw, NewCb).
+        counterDec(Player, Cb11, Cw11, NewCw, NewCb),
+        insertPiece(Board7, C8, Col, Player, NewBoard).
         
 /***************************************************************************************
                                         CASO 3 - _ooox
@@ -2064,7 +2056,7 @@ checkFlipR(CurrBoard, Line, Col, Player, NewBoard, Cb, Cw, NewCw, NewCb):-
         counterInc(Player, Cb2, Cw2, Cw3, Cb3),
         counterDec(Player, Cb3, Cw3, Cw4, Cb4),
         insertPiece(Board3, Line, C3, Player, Board4),
-        counterInc(Player, Cb4, Cw5, Cw5, Cb5),
+        counterInc(Player, Cb4, Cw4, Cw5, Cb5),
         counterDec(Player, Cb5, Cw5, Cw6, Cb6),
         insertPiece(Board4, Line, C4, Player, Board5),
         counterInc(Player, Cb6, Cw6, Cw7, Cb7),

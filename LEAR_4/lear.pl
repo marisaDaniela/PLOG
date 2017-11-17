@@ -49,7 +49,7 @@ defineKomi(Komi):-
     	write('Invalid Komi!! Try again'), nl,
     	defineKomi(Komi).
 
-gameOver(Komi, Cb, Cw, Board):-
+gameOver(Komi, Cb, Cw):-
 	write('GAME OVER'), nl,
     	write('Final Scores'), nl,
 	write('Black: '),
