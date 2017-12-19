@@ -1,10 +1,4 @@
 % Poiting at the crowd
-
-translate(0):- write(' .').
-translate(9):- write(' ').
-translate(1):- write(' x').
-translate(2):- write(' o').
-
 /* Exemplos de tabuleiros com tamanhos variaveis */
 board4L([ 
 [0,0,0,0],
@@ -61,6 +55,14 @@ show_line([El|Es]):-
 	show_line(Es).
 	
 % imprime o tabuleiro	
-printBoard(Board):- 
+printBoard4L(Board):- 
+		board4L(Board), 
+		lines(1,Board),nl,!.
+
+printBoard5L(Board):- 
+		board5L(Board), 
+		lines(1,Board),nl,!.
+		
+printBoard10L(Board):- 
 		board10L(Board), 
 		lines(1,Board),nl,!.
