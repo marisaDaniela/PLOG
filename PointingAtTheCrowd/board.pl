@@ -48,16 +48,37 @@ lines(N,[L|Ls]):-
 	N1 is N+1,
 	lines(N1, Ls).
 
+
+
 % imprime recursivamente os caracteres de cada linha do tabuleiro
 show_line([]).
 show_line([El|Es]):-
 	translate(El),
 	show_line(Es).
+
+
 	
 % imprime o tabuleiro	
 printBoard4L(Board):- 
-		board4L(Board), 
-		lines(1,Board),nl,!.
+		 %board4L(Board), 
+		%lines(1,Board),nl,!.
+	printSpace(10),write('__'),nl,
+	printSpace(7), writeSeqTop, write('__'),nl,
+	printSpace(4), writeSeqTop, writeSeqTop, write('__'),nl,
+	printSpace(1), writeSeqTop, writeSeqTop, writeSeqTop, write('__'),nl,
+	writeBeg, writeSeqTop ,writeSeqTop, writeSeqTop, nl,
+	writeSeqBottom, writeSeqBottom, writeSeqBottom, writeEnd, nl,
+	writeBeg, writeSeqTop ,writeSeqTop, writeSeqTop, nl,
+        writeSeqBottom, writeSeqBottom, writeSeqBottom, writeEnd, nl,
+	writeBeg, writeSeqTop ,writeSeqTop, writeSeqTop, nl,
+        writeSeqBottom, writeSeqBottom, writeSeqBottom, writeEnd, nl,
+	writeBeg, writeSeqTop ,writeSeqTop, writeSeqTop, nl,
+        writeSeqBottom, writeSeqBottom, writeSeqBottom, writeEnd, nl,
+	printSpace(3), writeSeqBottom, writeSeqBottom, writeEnd, nl,
+	printSpace(6), writeSeqBottom, writeEnd, nl,
+	printSpace(9), writeEnd, nl.
+	
+	
 
 printBoard5L(Board):- 
 		board5L(Board), 

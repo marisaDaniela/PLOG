@@ -1,8 +1,32 @@
-% Para traduzir os caracteres do tabuleiro
+%print spaces
+printSpace(T):-
+	write(' '),
+	NewT is T-1,
+	NewT>0,
+	printSpace(NewT).
 
-translate(0):- write(' .').
-translate(1):- write(' x').
-translate(2):- write(' o').
+printSpace(T).
+
+writeSeqTop:-
+        write('__'),
+        write('/'), write('  '), write('\\').
+writeSeqBottom:-
+        write('\\'), write('__'), write('/'), write('  ').
+writeBeg:-
+         write('/'), write('  '), write('\\').
+writeEnd:-
+        write('\\'), write('__'), write('/').
+
+
+% Para traduzir as setas no do tabuleiro
+
+translate(0):- write('  ').
+translate(1):- write('n ').
+translate(2):- write('s ').
+translate(3):- write('ne').
+translate(4):- write('nw').
+translate(5):- write('se').
+translate(6):- write('sw').
 
 % Ler caracteres introduzidos pelo utilizador
 le(Linha):-
