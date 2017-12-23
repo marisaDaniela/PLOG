@@ -1,5 +1,6 @@
 :- use_module(library(lists)).
 :- use_module(library(clpfd)).
+:- use_module(library(random)).
 :- ensure_loaded('Cases.pl').
 
 % posicao e direcao das setas
@@ -14,8 +15,21 @@
 % pontos - 7
 
 % setas ([X1,Y1,Dir],...).  
-setas1([[3,1,2], [1,2,1], [1,4,1], [4,4,4], [7,4,3], [5,5,5], [3,6,6], [3,7,5], [4,7,6]]). %setas do primeiro tabuleiro
-setas2([[2,1,3], [5,3,4], [4,4,1], [7,4,5], [1,6,6], [3,6,5], [4,7,6]]).
+setas1([[3,1,2], [1,2,1], [1,4,1], [4,4,4], [7,4,3], [5,5,5], [3,6,6], [3,7,5], [4,7,6]]). %setas do primeiro tabuleiro 
+setas2([[2,1,3], [5,3,4], [4,4,1], [7,4,5], [1,6,6], [3,6,5], [4,7,6]]). %setas do 2 tabuleiro (do exemplo)
+setas3([[2,1,3], [5,3,4], [4,5,1], [3,3,5], [4,6,6], [7,7,5], [8,8,6], [4,8,3],[3,5,3]]).
+setas4([[3,1,2], [1,2,1], [1,4,1], [7,4,5], [1,6,6], [3,6,5], [4,7,6],[7,1,3], [8,3,4], [9,4,1], [10,4,5], [1,8,6], [9,6,5], [9,7,6]]). 
+setas5([[2,1,3], [5,3,4], [4,4,1], [3,1,2], [1,2,1], [1,4,1],[4,7,6],[7,1,3], [3,3,4], [9,8,1], [10,9,5], [7,8,6], [9,8,5], [9,8,6]]). 
+setas6([[2,1,3], [5,3,4], [4,4,1], [7,4,5], [2,1,3], [5,3,4], [4,7,6],[4,4,3], [5,5,4]]). 
+setas7([[2,4,3], [6,3,4], [6,4,1], [8,1,2], [1,7,1], [1,8,1],[4,7,6],[7,1,3], [3,3,4], [7,8,1], [10,9,5], [7,8,6], [9,8,5], [9,8,6],[2,1,3], [5,3,4], [4,4,1], [3,1,2],[1,2,1], [1,4,1],[10,1,3]]). 
+
+setas(1,Arrows):- setas1(Arrows).
+setas(2,Arrows):- setas2(Arrows).
+setas(3,Arrows):- setas3(Arrows).
+setas(4,Arrows):- setas3(Arrows).
+setas(5,Arrows):- setas5(Arrows).
+setas(6,Arrows):- setas6(Arrows).
+setas(7,Arrows):- setas7(Arrows).
 
 % Visualizacao do tabuleiro
 
@@ -85,33 +99,33 @@ insere([Cell|Tail], List, Points) :-
 getPoints([], Points, Points).
 getPoints([Cell|Tail], List, Points) :- insere(Cell, List, NewVars), getPoints(Tail, NewVars, Points).
 	
-parteCima(0, Board, Size) :-
+parteCima(0, Board, Size,SizeTotal) :-
 	N is round(Size/2),
 	NewSize is N*2-2,
 	NewN is N-1,
-	parteBaixo(NewN, Board, NewSize).
+	parteBaixo(NewN, Board, NewSize,SizeTotal).
 	
-parteCima(N, [Board|Tail], Size) :-
+parteCima(N, [Board|Tail], Size, SizeTotal) :-
 	NewN is N-1,
 	NewSize is Size+1,
 	length(Line, Size),
-	domain(Line, 0, 7),
+	domain(Line, 0, SizeTotal),
 	Board = Line,
-	parteCima(NewN, Tail, NewSize).
+	parteCima(NewN, Tail, NewSize,SizeTotal).
 	
-parteBaixo(0, _, _).
-parteBaixo(N, [Board|Tail], Size) :-
+parteBaixo(0, _, _,_).
+parteBaixo(N, [Board|Tail], Size,SizeTotal) :-
 	NewN is N-1,
 	NewSize is Size-1,
 	length(Line, Size),
-	domain(Line, 0, 7),
+	domain(Line, 0, SizeTotal),
 	Board = Line,
-	parteBaixo(NewN, Tail, NewSize).
+	parteBaixo(NewN, Tail, NewSize,SizeTotal).
 
 criaTab(N, FinalTab) :-
 	Size is N*2-1,
 	length(Board, Size),
-	parteCima(N, Board, N),
+	parteCima(N, Board, N, Size),
 	FinalTab = Board.
 	
 getCell(Lin, Col, Board, Cell) :-
@@ -174,16 +188,24 @@ main:-
 	nl, write('+         Choose wisely:         +'),
 	nl, write('+                                +'),
 	nl, write('+ 1) Exemplo 1      2) Exemplo 2 +'),
-	nl, write('+ 0) Sair                        +'),
+	nl, write('+ 3) Random         3) Sair      +'),
 	nl, write('+                                +'),
 	nl, write('+--------------------------------+'),nl,
 	repeat,	le(C),
 	analize(C).
 
 analize(1):-
-	arrows1(Arrows),
+	statistics(walltime, [Start,_]),
+	setas1(Arrows),
 	pointing(4, Arrows, Board),
-	mostraTab(Board),
+	mostraTab(Board),nl,
+	write('+--------------------------------+'),nl,
+	write('+          Estatisticas          +'),nl,
+	write('+--------------------------------+'),nl,
+	statistics(walltime, [End,_]) ,
+	Time is End - Start ,
+	write('Tempo: '),
+	write(Time),nl,
 	fd_statistics, 
 	nl, write('+--------------------------------+'),
 	nl, write('+ 1) Voltar         0) Sair      +'),
@@ -193,9 +215,18 @@ analize(1):-
 	
 	
 analize(2):-
-	arrows2(Arrows),
+	statistics(walltime, [Start,_]),
+	setas2(Arrows),
 	pointing(4, Arrows, Board),
-	mostraTab(Board),fd_statistics,
+	mostraTab(Board),
+	write('+--------------------------------+'),nl,
+	write('+          Estatisticas          +'),nl,
+	write('+--------------------------------+'),nl,
+	statistics(walltime, [End,_]) ,
+	Time is End - Start ,
+	write('Tempo: '),
+	write(Time),nl,
+	fd_statistics, 
 	nl, write('+--------------------------------+'),
 	nl, write('+ 1) Voltar         0) Sair      +'),
 	nl, write('+--------------------------------+'),nl,
@@ -206,6 +237,29 @@ analize(0):- !.
 analize2(0):- !.
 
 analize2(1):- !, main.
+
+analize(3):-
+	statistics(walltime, [Start,_]),
+	write('Lado do hexagono(maior do que 4):'), nl,
+	repeat,	le(C),C >= 4,
+	random(1,8, S), %escolhe aleatoriamente o grupo das setas
+	setas(S, Arrows),
+	pointing(C, Arrows, Board),
+	mostraTab(Board),
+	write('+--------------------------------+'),nl,
+	write('+          Estatisticas          +'),nl,
+	write('+--------------------------------+'),nl,
+	statistics(walltime, [End,_]) ,
+	Time is End - Start ,
+	write('Tempo: '),
+	write(Time),nl,
+	fd_statistics, 
+	nl, write('+--------------------------------+'),
+	nl, write('+ 1) Voltar         0) Sair      +'),
+	nl, write('+--------------------------------+'),nl,
+	repeat,	le(C2),
+	analize2(C2).
+	
 	
 	
 	
