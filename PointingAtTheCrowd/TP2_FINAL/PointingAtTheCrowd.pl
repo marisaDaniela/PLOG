@@ -46,105 +46,110 @@ parteCima(Size, [H|Tail]):-
 	write(H),write(' '),
 	parteCima(NewSize, Tail).
 
-verParteCima([], _, _).
-verParteCima([H|Tail], Size1, Size2) :-
+verParteCima([], _).
+verParteCima([H|Tail], Size1) :-
 	length(H, Size),
-	Size2 is Size1-1,
+	Size2 is Size1 - 1,
 	espacamento(Size2),
 	parteCima(Size, H),
-	verParteCima(Tail, Size2, _).
+	verParteCima(Tail, Size2).
 
 parteBaixo(0,_):-
 	write('\n').
-
 parteBaixo(Size, [H|Tail]):-
-	NewSize is Size -1,
+	NewSize is Size - 1,
 	write(H), write(' '),
 	parteBaixo(NewSize, Tail).
 
-espacamento2(0).
-espacamento2(Num):-
-	write(" "),
-	NewNum is Num - 1,
-	espacamento2(NewNum).
-
-verParteBaixo([],_,_).
-verParteBaixo([H|Tail], Size1, Size2):-
+verParteBaixo([],_).
+verParteBaixo([H|Tail], Size1):-
 	length(H, Size),
-	Size2 is Size1+1,
+	Size2 is Size1 + 1,
 	espacamento(Size2),
 	parteBaixo(Size,H),
-	verParteBaixo(Tail, Size2, _).
+	verParteBaixo(Tail, Size2).
 	
-divide(H, 0, Aux1, H, Aux1).
-divide([H|Tail], N, List1, List2, Aux1):-
+divideTab(H, 0, Aux1, H, Aux1).
+divideTab([H|Tail], N, List1, List2, Aux1):-
 	NewN is N-1,
-	divide(Tail, NewN, List1,List2, [H|Aux1]).
-	
-mostraTab(Board):-
-	length(Board, Size),
-	N is round((Size + 1)/2),
-	divide(Board, N, List1, List2, Aux1),
-	reverse(List1, NewList1),
-	verParteCima(NewList1, N, _),
-	verParteBaixo(List2,0, _).
+	divideTab(Tail, NewN, List1, List2, [H|Aux1]).
 
-% restricoes:
-		% Restricao 1:
-			% A soma dos pontos na direcao da seta tem de ser maior do que a soma dos pontos nas outras direcoes para quais a seta podia virar
-insere([], Points, Points).
-insere([Cell|Tail], List, Points) :-
-	(var(Cell), Cell #= 0 #\/ Cell #= 7, insere(Tail, [Cell|List], Points)) ; insere(Tail, [Cell|List], Points).
-	
-getPoints([], Points, Points).
-getPoints([Cell|Tail], List, Points) :- insere(Cell, List, NewVars), getPoints(Tail, NewVars, Points).
-	
-parteCima(0, Board, Size,SizeTotal) :-
-	N is round(Size/2),
-	NewSize is N*2-2,
-	NewN is N-1,
+parteCima(0, Board, Size, SizeTotal) :-
+	N is round(Size/2), 
+	NewSize is N * 2 - 2,
+	NewN is N - 1,
 	parteBaixo(NewN, Board, NewSize,SizeTotal).
 	
-parteCima(N, [Board|Tail], Size, SizeTotal) :-
-	NewN is N-1,
-	NewSize is Size+1,
+parteCima(N, [Line|Tail], Size, SizeTotal) :-
+	NewN is N - 1,
+	NewSize is Size + 1,
 	length(Line, Size),
 	domain(Line, 0, SizeTotal),
-	Board = Line,
 	parteCima(NewN, Tail, NewSize,SizeTotal).
 	
 parteBaixo(0, _, _,_).
-parteBaixo(N, [Board|Tail], Size,SizeTotal) :-
-	NewN is N-1,
-	NewSize is Size-1,
+parteBaixo(N, [Line|Tail], Size, SizeTotal) :-
+	NewN is N - 1,
+	NewSize is Size - 1,
 	length(Line, Size),
 	domain(Line, 0, SizeTotal),
-	Board = Line,
 	parteBaixo(NewN, Tail, NewSize,SizeTotal).
 
-criaTab(N, FinalTab) :-
-	Size is N*2-1,
+%cria um tabuleiro hexagonal de lado N 
+criaTab(N, Board) :-
+	Size is N * 2 - 1, %tamanho da linha maior (a do meio)
 	length(Board, Size),
-	parteCima(N, Board, N, Size),
-	FinalTab = Board.
+	parteCima(N, Board, N, Size).
 	
-getCell(Lin, Col, Board, Cell) :-
+%a parte de baixo vai ser simetrica da parte de cima 
+mostraTab(Board):-
+	length(Board, Size),
+	N is round((Size + 1)/2),
+	divideTab(Board, N, List1, List2, Aux1),
+	reverse(List1, NewList1),
+	verParteCima(NewList1, N),
+	verParteBaixo(List2,0).
+
+% restricao
+% A soma dos pontos na direcao da seta tem de ser maior do que a soma dos pontos nas outras direcoes para quais a seta podia virar
+
+% caso a celula seja 0 ou 7 (pontos) coloca numa lista
+insere([], Points, Points).
+insere([H|Tail], List, Points) :-
+	(var(H), H #= 0 #\/ H #= 7, insere(Tail, [H|List], Points)) ; 
+	insere(Tail, [H|List], Points).
+	
+%para obter a lista com os pontos
+getPoints([], Points, Points).
+getPoints([H|Tail], List, Points) :- 
+	insere(H, List, NewVars), 
+	getPoints(Tail, NewVars, Points).
+	
+	
+%obter a celula da linha Lin e coluna Col
+getPos(Lin, Col, Board, Cell) :-
 	nth1(Col, Board, Line),
 	nth1(Lin, Line, Cell).
-getCell(_, _, _, -1).
+getPos(_, _, _, -1).
 
+%inserir as setas no tabuleiro formado
 colocaSetas([], _).
 colocaSetas([[Lin,Col, Dir]|Tail], Board) :-
-	getCell(Lin, Col, Board, Cell),
+	getPos(Lin, Col, Board, Cell),
 	Cell is Dir,
 	colocaSetas(Tail, Board).
 
 	
+%Aplicar a restricao: 
+%1º compara a direcao da seta 
+%2º verifica os pontos na direcao da seta, se tiver , adiciona-os a uma lista
+%3º se nao, inverte a lista e verifica na direcao contraria, caso nao tenha tambem, vai ver nas diagonais (colunas)
+% restricao: a soma dos pontos na direcao da seta tem de ser maior do que nas outras direcoes possiveis
+
 comparaDir(Lin, Col, N, Board, Dir, Dir).
-	
 comparaDir(Lin, Col, N, Board, Dir, Dir2) :-
-	case(Dir,Lin, Col, N, Board,  [], List),
-	case(Dir2,Lin, Col, N, Board,  [], List2),
+	case(Dir,Lin, Col, N, Board, [], List),
+	case(Dir2,Lin, Col, N, Board, [], List2),
 	sum(List, #=, Sum),
 	sum(List2, #<, Sum).
 	
@@ -158,13 +163,15 @@ checkSetas([[Lin,Col, Dir]|Tail], N, Board) :-
 	comparaDir(Lin, Col, N, Board, Dir, 6),
 	checkSetas(Tail, N, Board).
 	
+%funcao principal
 pointing(N, Arrows, Board) :-
 	criaTab(N, Board),
 	colocaSetas(Arrows, Board),
 	checkSetas(Arrows, N, Board),
 	getPoints(Board, [], Points),
 	labeling([], Points).
-	
+
+%Interface	----------
 % Ler caracteres introduzidos pelo utilizador
 le(Linha):-
 	get_code(Ch),
@@ -242,7 +249,8 @@ analize(3):-
 	statistics(walltime, [Start,_]),
 	write('Lado do hexagono(maior do que 4):'), nl,
 	repeat,	le(C),C >= 4,
-	random(1,8, S), %escolhe aleatoriamente o grupo das setas
+	random(1,8, S), %escolhe aleatoriamente o grupo das setas TODO: tem um bug para os casos de ter um tabuleiro em que o numero maximo de colunas e 7 e coloca-se uma 8, se se voltar a escolher entretanto formara o tabuleiro, mas como e random a escolha, as vezes pode demorar
+	%todo: corrigir isto
 	setas(S, Arrows),
 	pointing(C, Arrows, Board),
 	mostraTab(Board),
